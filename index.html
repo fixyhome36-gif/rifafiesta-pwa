@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>RifaFiesta — Sorteos del Perú</title>
+<meta name="theme-color" content="#C0392B">
+<link rel="manifest" href="./manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;600;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- ===================== PANTALLA: HOME ===================== -->
+  <div class="screen active" id="screen-home">
+    <div class="screen-scroll">
+      <div class="topbar">
+        <div class="greeting">Hola, Roel 👋<strong>Buenas noches</strong></div>
+        <div class="icon-btn">🔔</div>
+      </div>
+
+      <div class="banner">
+        <div class="banner-tag" id="banner-tag">🌊 Fiesta de San Juan</div>
+        <div class="banner-title" id="banner-titulo">Sorteo termina en:</div>
+        <div class="countdown">
+          <div class="cd-block"><div class="cd-num" id="cd-dias">--</div><div class="cd-unit">días</div></div>
+          <div class="cd-block"><div class="cd-num" id="cd-hrs">--</div><div class="cd-unit">hrs</div></div>
+          <div class="cd-block"><div class="cd-num" id="cd-min">--</div><div class="cd-unit">min</div></div>
+        </div>
+      </div>
+
+      <div class="filters">
+        <div class="filter-pill active" onclick="filtrarPorCategoria('todos', this)">Todos</div>
+        <div class="filter-pill" onclick="filtrarPorCategoria('san-juan', this)">🌊 San Juan</div>
+        <div class="filter-pill" onclick="filtrarPorCategoria('fiestas-patrias', this)">🇵🇪 F. Patrias</div>
+        <div class="filter-pill" onclick="filtrarPorCategoria('inti-raymi', this)">☀️ Inti Raymi</div>
+        <div class="filter-pill" onclick="filtrarPorCategoria('navidad', this)">🎄 Navidad</div>
+      </div>
+
+      <div class="section-label">Sorteos activos</div>
+      <div class="card-list" id="lista-sorteos"></div>
+    </div>
+
+    <div class="tabbar">
+      <div class="tab-item active" onclick="irA('home')"><span class="tab-icon">🎟️</span>Sorteos</div>
+      <div class="tab-item" onclick="irA('calendario')"><span class="tab-icon">📅</span>Calendario</div>
+      <div class="tab-item" onclick="irA('ganadores')"><span class="tab-icon">🏆</span>Ganadores</div>
+      <div class="tab-item" onclick="irA('perfil')"><span class="tab-icon">👤</span>Perfil</div>
+    </div>
+  </div>
+
+  <!-- ===================== PANTALLA: DETALLE SORTEO ===================== -->
+  <div class="screen" id="screen-detalle">
+    <div class="screen-scroll" style="padding-bottom:0;">
+      <div class="hero-img">
+        <span class="hero-img-emoji">🏍️</span>
+        <div class="nav-floating">
+          <div class="nav-btn-round" onclick="irA('home')">←</div>
+          <div class="nav-btn-round">↗</div>
+        </div>
+        <div class="badge-floating">⭐ Destacado</div>
+      </div>
+      <div class="detail-body">
+        <div class="detail-fest">🌊 FIESTA DE SAN JUAN · UCAYALI</div>
+        <div class="detail-title">Gran Sorteo San Juan Bautista</div>
+
+        <div class="prize-box">
+          <div class="prize-icon">🏆</div>
+          <div>
+            <div class="prize-label">Premio principal</div>
+            <div class="prize-name">Moto Honda CB150</div>
+            <div class="prize-value">Valorizado en S/ 8,500</div>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-row-label">📅 Fecha del sorteo</div>
+          <div class="info-row-value fecha-sorteo-valor">—</div>
+        </div>
+        <div class="info-row">
+          <div class="info-row-label">💰 Precio por boleto</div>
+          <div class="info-row-value precio-boleto-valor">—</div>
+        </div>
+
+        <div class="progress-box">
+          <div class="progress-top"><span>Boletos vendidos</span><strong class="vendidos-valor">—</strong></div>
+          <div class="progress-bar2"><div class="progress-fill2" style="width:0%"></div></div>
+          <div class="progress-bottom"><span class="disponibles-texto">—</span><span class="disponible pct-texto">—</span></div>
+        </div>
+
+        <div class="trust-row">
+          <div class="trust-pill"><span class="trust-icon">⚖️</span><span class="trust-text">Con notario</span></div>
+          <div class="trust-pill"><span class="trust-icon">📺</span><span class="trust-text">En vivo</span></div>
+          <div class="trust-pill"><span class="trust-icon">🏛️</span><span class="trust-text">RUC activo</span></div>
+        </div>
+
+        <div class="desc-title">📝 Descripción</div>
+        <div class="desc-text">—</div>
+      </div>
+    </div>
+    <div class="sticky-footer">
+      <div>
+        <div class="footer-price-label">Desde</div>
+        <div class="footer-price-num">S/10</div>
+      </div>
+      <div class="btn-primary-full" onclick="irA('seleccion', { sorteoId: state.sorteoSeleccionado.id })">🎟️ Elegir mis números</div>
+    </div>
+  </div>
+
+  <!-- ===================== PANTALLA: SELECCIÓN + CHECKOUT ===================== -->
+  <div class="screen" id="screen-seleccion">
+    <div class="screen-scroll" style="padding-bottom:0;">
+      <div class="subheader">
+        <div class="nav-btn-round" style="background:var(--fondo-card)" onclick="irA('detalle', { sorteoId: state.sorteoSeleccionado.id })">←</div>
+        <div class="subheader-title">Elige tus números</div>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-icon">🏍️</div>
+        <div>
+          <div class="summary-title">Sorteo San Juan Bautista</div>
+          <div class="summary-sub">S/10 por boleto</div>
+        </div>
+      </div>
+
+      <div class="sub-label">Toca para elegir (mostrando 30 de los disponibles)</div>
+      <div class="num-grid" id="num-grid"></div>
+      <div class="btn-azar" onclick="elegirAlAzar()">🎲 Elegir uno al azar</div>
+
+      <div class="divider-line"></div>
+
+      <div class="pay-label">Método de pago</div>
+      <div class="pay-options">
+        <div class="pay-opt selected" onclick="seleccionarMetodoPago('yape', this)">
+          <div class="pay-icon">📱</div>
+          <div class="pay-name">Yape</div>
+          <div class="pay-check">✓</div>
+        </div>
+        <div class="pay-opt" onclick="seleccionarMetodoPago('tarjeta', this)">
+          <div class="pay-icon">💳</div>
+          <div class="pay-name">Tarjeta de débito/crédito</div>
+          <div class="pay-check"></div>
+        </div>
+        <div class="pay-opt" onclick="seleccionarMetodoPago('plin', this)">
+          <div class="pay-icon">🔵</div>
+          <div class="pay-name">Plin</div>
+          <div class="pay-check"></div>
+        </div>
+      </div>
+
+      <div class="total-box">
+        <div class="total-row"><span id="total-cantidad">0 boletos</span><span id="total-subtotal">S/0.00</span></div>
+        <div class="total-row final"><span>Total a pagar</span><span id="total-final">S/0.00</span></div>
+      </div>
+    </div>
+    <div class="sticky-footer" style="background:transparent; border-top:none; padding-top:0;">
+      <button class="btn-confirm-full disabled" id="btn-confirmar-pago" style="width:100%" disabled onclick="confirmarCompra()">Elige al menos 1 número</button>
+    </div>
+  </div>
+
+  <!-- ===================== PANTALLA: CONFIRMACIÓN ===================== -->
+  <div class="screen" id="screen-confirmacion">
+    <div class="screen-scroll">
+      <div class="confirm-content">
+        <div class="confirm-check">✅</div>
+        <div class="confirm-title">¡Listo!</div>
+        <div class="confirm-sub">Tu boleto digital ya está registrado.<br>Mucha suerte en el sorteo 🍀</div>
+
+        <div class="ticket-box">
+          <div class="ticket-top">
+            <div class="ticket-fest">🌊 FIESTA DE SAN JUAN</div>
+            <div class="ticket-name">Gran Sorteo San Juan Bautista</div>
+            <div class="qr-box">▦</div>
+            <div class="ticket-nums"></div>
+          </div>
+          <div class="ticket-tear"></div>
+          <div class="ticket-bottom">
+            <div>Sorteo<strong class="fecha-sorteo-ticket">—</strong></div>
+            <div style="text-align:right">Total pagado<strong class="total-pagado-ticket">—</strong></div>
+          </div>
+        </div>
+
+        <div class="info-list">
+          <div class="info-item"><div class="info-num">1</div>Recibirás un recordatorio un día antes del sorteo.</div>
+          <div class="info-item"><div class="info-num">2</div>El sorteo se transmite en vivo con notario presente.</div>
+          <div class="info-item"><div class="info-num">3</div>Si ganas, te contactaremos por el número registrado.</div>
+        </div>
+
+        <div class="btn-block-gold" onclick="alert('Compartir (simulado en este prototipo)')">📤 Compartir mi boleto</div>
+        <div class="btn-block-ghost" onclick="irA('perfil')">Ver mis boletos</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== PANTALLA: CALENDARIO ===================== -->
+  <div class="screen" id="screen-calendario">
+    <div class="screen-scroll">
+      <div class="topbar">
+        <div class="greeting"><strong>Calendario de sorteos</strong></div>
+      </div>
+      <div class="section-label">Un sorteo por cada fiesta del año</div>
+      <div class="cal-month-list" id="lista-calendario"></div>
+    </div>
+    <div class="tabbar">
+      <div class="tab-item" onclick="irA('home')"><span class="tab-icon">🎟️</span>Sorteos</div>
+      <div class="tab-item active" onclick="irA('calendario')"><span class="tab-icon">📅</span>Calendario</div>
+      <div class="tab-item" onclick="irA('ganadores')"><span class="tab-icon">🏆</span>Ganadores</div>
+      <div class="tab-item" onclick="irA('perfil')"><span class="tab-icon">👤</span>Perfil</div>
+    </div>
+  </div>
+
+  <!-- ===================== PANTALLA: GANADORES ===================== -->
+  <div class="screen" id="screen-ganadores">
+    <div class="screen-scroll">
+      <div class="topbar">
+        <div class="greeting"><strong>Ganadores recientes</strong></div>
+      </div>
+      <div class="section-label">Gente real que ya ganó</div>
+      <div class="winners-list" id="lista-ganadores"></div>
+    </div>
+    <div class="tabbar">
+      <div class="tab-item" onclick="irA('home')"><span class="tab-icon">🎟️</span>Sorteos</div>
+      <div class="tab-item" onclick="irA('calendario')"><span class="tab-icon">📅</span>Calendario</div>
+      <div class="tab-item active" onclick="irA('ganadores')"><span class="tab-icon">🏆</span>Ganadores</div>
+      <div class="tab-item" onclick="irA('perfil')"><span class="tab-icon">👤</span>Perfil</div>
+    </div>
+  </div>
+
+  <!-- ===================== PANTALLA: PERFIL ===================== -->
+  <div class="screen" id="screen-perfil">
+    <div class="screen-scroll">
+      <div class="profile-header">
+        <div class="profile-avatar">👤</div>
+        <div>
+          <div class="profile-name" id="perfil-nombre">—</div>
+          <div class="profile-phone" id="perfil-telefono">—</div>
+        </div>
+      </div>
+
+      <div class="profile-section-title">Mis boletos</div>
+      <div class="profile-tickets" id="perfil-tickets"></div>
+
+      <div class="profile-section-title">Configuración</div>
+      <div class="menu-list">
+        <div class="menu-item"><span class="menu-item-icon">🔔</span>Notificaciones</div>
+        <div class="menu-item"><span class="menu-item-icon">💳</span>Métodos de pago</div>
+        <div class="menu-item"><span class="menu-item-icon">📄</span>Bases legales y términos</div>
+        <div class="menu-item"><span class="menu-item-icon">💬</span>Ayuda y soporte</div>
+        <div class="menu-item"><span class="menu-item-icon">🚪</span>Cerrar sesión</div>
+      </div>
+    </div>
+    <div class="tabbar">
+      <div class="tab-item" onclick="irA('home')"><span class="tab-icon">🎟️</span>Sorteos</div>
+      <div class="tab-item" onclick="irA('calendario')"><span class="tab-icon">📅</span>Calendario</div>
+      <div class="tab-item" onclick="irA('ganadores')"><span class="tab-icon">🏆</span>Ganadores</div>
+      <div class="tab-item active" onclick="irA('perfil')"><span class="tab-icon">👤</span>Perfil</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Toast de instalación PWA -->
+<div class="install-toast" id="install-toast">
+  <div class="install-toast-text">📲 Instala RifaFiesta en tu celular</div>
+  <div class="install-toast-btn" onclick="instalarPWA()">Instalar</div>
+  <div class="install-toast-close" onclick="cerrarToastInstalacion()">✕</div>
+</div>
+
+<script src="./data.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
