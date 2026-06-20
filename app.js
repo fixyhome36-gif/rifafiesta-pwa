@@ -45,25 +45,31 @@ async function renderHome() {
   for (const s of sorteos) {
     const vendidos = await obtenerBoletosVendidos(s.id);
     const pct = Math.round((vendidos.size / s.total_boletos) * 100);
-    const fecha = formatearFechaCorta(s.fecha_sorteo);
 
     const badgeClass = s.badge === 'Nuevo' ? 'nuevo' : (s.badge === 'Últimos boletos' ? 'ultimos' : '');
+    const temaClass = 'tema-' + (s.tema === 'moto' ? 'moto' : s.tema === 'tv' ? 'tv' : s.tema === 'viaje' ? 'viaje' : 'navidad');
 
     const card = document.createElement('div');
     card.className = 'sorteo-card';
     card.onclick = () => irA('detalle', { sorteoId: s.id });
     card.innerHTML = `
-      <div class="card-img">${s.premio_emoji}
+      <div class="card-img ${temaClass}">
         <div class="card-badge ${badgeClass}">${s.badge}</div>
+        <span class="card-img-emoji">${s.premio_emoji}</span>
+        <div class="card-img-content">
+          <div class="card-fest-onimg">${s.emoji_fest} ${s.festividad}</div>
+          <div class="card-title-onimg">${s.premio_nombre}</div>
+        </div>
       </div>
       <div class="card-body">
-        <div class="card-fest">${s.emoji_fest} ${s.festividad.toUpperCase()}</div>
-        <div class="card-title">${s.premio_nombre}</div>
-        <div class="card-progress-label"><span>${vendidos.size} vendidos</span><span>${pct}%</span></div>
+        <div class="card-progress-label"><span>${vendidos.size} vendidos</span><span>${pct}% del total</span></div>
         <div class="card-progress-bar"><div class="card-progress-fill" style="width:${pct}%"></div></div>
         <div class="card-footer">
-          <div class="card-price">S/${s.precio_boleto}<span>por boleto</span></div>
-          <div class="card-date">Sorteo<br><strong>${fecha}</strong></div>
+          <div class="card-price-block">
+            <span class="card-price">S/${s.precio_boleto}</span>
+            <span class="card-price-unit">/ boleto</span>
+          </div>
+          <div class="card-btn-go">Participar →</div>
         </div>
       </div>
     `;
@@ -73,7 +79,7 @@ async function renderHome() {
   // Banner countdown con el sorteo más próximo destacado
   const destacado = sorteos.find(s => s.destacado) || sorteos[0];
   if (destacado) {
-    document.getElementById('banner-titulo').textContent = `${destacado.titulo} termina en:`;
+    document.getElementById('banner-titulo').textContent = `${destacado.premio_nombre}`;
     document.getElementById('banner-tag').textContent = `${destacado.emoji_fest} ${destacado.festividad}`;
     iniciarCountdown(destacado.fecha_sorteo, 'cd-dias', 'cd-hrs', 'cd-min');
   }
