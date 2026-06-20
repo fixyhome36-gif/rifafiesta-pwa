@@ -29,17 +29,31 @@
           <div class="cd-block"><div class="cd-num" id="cd-hrs">--</div><div class="cd-unit">hrs</div></div>
           <div class="cd-block"><div class="cd-num" id="cd-min">--</div><div class="cd-unit">min</div></div>
         </div>
+        <div class="banner-cta" onclick="irA('detalle', { sorteoId: 'sj-2026' })">Ver sorteo →</div>
       </div>
 
       <div class="filters">
-        <div class="filter-pill active" onclick="filtrarPorCategoria('todos', this)">Todos</div>
-        <div class="filter-pill" onclick="filtrarPorCategoria('san-juan', this)">🌊 San Juan</div>
-        <div class="filter-pill" onclick="filtrarPorCategoria('fiestas-patrias', this)">🇵🇪 F. Patrias</div>
-        <div class="filter-pill" onclick="filtrarPorCategoria('inti-raymi', this)">☀️ Inti Raymi</div>
-        <div class="filter-pill" onclick="filtrarPorCategoria('navidad', this)">🎄 Navidad</div>
+        <div class="filter-pill active" onclick="filtrarPorCategoria('todos', this)">
+          <div class="filter-pill-icon">🎟️</div><div class="filter-pill-label">Todos</div>
+        </div>
+        <div class="filter-pill" onclick="filtrarPorCategoria('san-juan', this)">
+          <div class="filter-pill-icon">🌊</div><div class="filter-pill-label">San Juan</div>
+        </div>
+        <div class="filter-pill" onclick="filtrarPorCategoria('fiestas-patrias', this)">
+          <div class="filter-pill-icon">🇵🇪</div><div class="filter-pill-label">Patrias</div>
+        </div>
+        <div class="filter-pill" onclick="filtrarPorCategoria('inti-raymi', this)">
+          <div class="filter-pill-icon">☀️</div><div class="filter-pill-label">Inti Raymi</div>
+        </div>
+        <div class="filter-pill" onclick="filtrarPorCategoria('navidad', this)">
+          <div class="filter-pill-icon">🎄</div><div class="filter-pill-label">Navidad</div>
+        </div>
       </div>
 
-      <div class="section-label">Sorteos activos</div>
+      <div class="section-label">
+        <span class="section-label-main">Sorteos activos</span>
+        <span class="section-label-action">Ver todos</span>
+      </div>
       <div class="card-list" id="lista-sorteos"></div>
     </div>
 
